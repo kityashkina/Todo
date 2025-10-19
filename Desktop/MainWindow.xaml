@@ -5,11 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Desktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="600" Width="800" ResizeMode="NoResize">
     <Grid>
-        <Grid Margin="400,0,0,0">
-            <Label Content="Добро пожаловать!" HorizontalAlignment="Left" Margin="30,50,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <Grid Margin="0,0,400,0">
+            <Image HorizontalAlignment="Left" Height="180" Margin="70,62,0,0" VerticalAlignment="Top" Width="187" Source="/logo.png"/>
         </Grid>
+        <Grid Margin="400,0,0,0">
+            <Label Content="Добро пожаловать!" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" FontSize="28"/>
+
+            <Grid Margin="0,165,0,295">
+                <Label Content="Почта" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+                <Label Content="_______________________________________________________________________________________________________________________________" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Foreground="Gray"/>
+                <TextBox HorizontalAlignment="Left" Margin="13,55,0,0" TextWrapping="Wrap" Text="Введите почту" VerticalAlignment="Top" Width="319" FontSize="16" BorderBrush="{x:Null}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Foreground="Gray" />
+            </Grid>
+            <Grid Margin="0,270,0,150" >
+                <Label Content="Пароль" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+                <TextBox HorizontalAlignment="Left" Margin="13,55,0,0" TextWrapping="Wrap" Text="Введите пароль" VerticalAlignment="Top" Width="319" FontSize="16" BorderBrush="{x:Null}" GotFocus="TextBox_GotFocus2" LostFocus="TextBox_LostFocus2" Foreground="Gray" />
+                <Label Content="_______________________________________________________________________________________________________________________________" HorizontalAlignment="Left" Margin="10,0,0,50" VerticalAlignment="Bottom" Foreground="Gray"/>
+                <Button Content="Восстановить пароль" HorizontalAlignment="Left" Margin="147,93,0,0" VerticalAlignment="Top" Width="192" FontSize="18" BorderBrush="{x:Null}" Background="{x:Null}"/>
+            </Grid>
+            <Grid Margin="0,394,0,48">
+                <Button Content="Войти" HorizontalAlignment="Left" Margin="15,18,0,0" VerticalAlignment="Top" Click="Button_Click" FontSize="20" Width="320" Height="45" BorderBrush="{x:Null}" Background="#FFFF5050" Foreground="White">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="17"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="15,71,0,0" VerticalAlignment="Top" FontSize="20" Height="45" Width="320" Background="#FFFF5050" BorderBrush="{x:Null}" Foreground="White" Click="RegisterButton_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="17"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+
+
+        </Grid>
+
 
     </Grid>
 </Window>
