@@ -27,15 +27,52 @@ namespace Desktop
 		//кнопка "назад"
 		private void BackButton_Click(object sender, RoutedEventArgs e)
 		{
-			this.Close();
-
 			MainWindow mainWindow = new MainWindow();
 			mainWindow.Show();
+			this.Close();
+		}
+
+		public class Validator
+		{
+			public static string CheckFields(string username, string email, string password, string confirmPassword)
+			{
+				if (username == "Введите имя пользователя" || email == "exam@yandex.ru" ||
+					password == "Введите пароль" || confirmPassword == "Повторите пароль")
+					return "Не все поля ввода заполнены!";
+
+				if (username.Length < 3)
+					return "Ваше имя должно быть не менее 3 символов!";
+
+				if (!email.Contains("@") || !email.Contains("."))
+					return "Введена неверная почта!";
+
+				if (email.IndexOf("@") == 0 || email.IndexOf(".") == email.Length - 1)
+					return "Введена неверная почта!";
+
+				if (password.Length < 6)
+					return "Пароль должен быть не менее 6 символов!";
+
+				if (password != confirmPassword)
+					return "Пароли не совпадают! Попробуйте снова.";
+
+				return "Успех";
+			}
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
+			string result = Validator.CheckFields(TextBoxUsername.Text, TextBoxEmail.Text, TextBoxPassword.Text, TextBoxConfirmPassword.Text);
 
+			if (result == "Успех")
+			{
+				Main_empty main_Empty = new Main_empty();
+				main_Empty.Show();
+				this.Close();
+			}
+			else
+			{
+				MessageBox.Show(result);
+			}
 		}
 
 		private void TextBox_GotFocus(object sender, RoutedEventArgs e)

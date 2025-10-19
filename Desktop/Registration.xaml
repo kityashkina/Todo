@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Desktop"
         mc:Ignorable="d"
-        Title="Registration" Height="600" Width="800" ResizeMode="NoResize">
+        Title="Registration" Height="600" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid Margin="0,0,400,0">
             <Image HorizontalAlignment="Left" Height="180" Margin="70,62,0,0" VerticalAlignment="Top" Width="187" Source="/logo.png"/>
@@ -19,25 +19,25 @@
             <Grid Margin="0,74,0,395">
                 <Label Content="Имя пользователя" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
                 <Label Content="_______________________________________________________________________________________________________________________________" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Foreground="Gray"/>
-                <TextBox HorizontalAlignment="Left" Margin="13,20,0,0" TextWrapping="Wrap" Text="Введите имя пользователя" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" VerticalAlignment="Center" Width="319" FontSize="16" BorderBrush="{x:Null}" Foreground="Gray" />
+                <TextBox x:Name="TextBoxUsername" HorizontalAlignment="Left" Margin="13,20,0,0" TextWrapping="Wrap" Text="Введите имя пользователя" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" VerticalAlignment="Center" Width="319" FontSize="16" BorderBrush="{x:Null}" Foreground="Gray" />
             </Grid>
 
             <Grid Margin="0,154,0,315">
                 <Label Content="Ваша почта" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
                 <Label Content="_______________________________________________________________________________________________________________________________" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Foreground="Gray"/>
-                <TextBox HorizontalAlignment="Left" Margin="13,20,0,0" TextWrapping="Wrap" Text="exam@yandex.ru" GotFocus="TextBox_GotFocus2" LostFocus="TextBox_LostFocus2" VerticalAlignment="Center" Width="319" FontSize="16" BorderBrush="{x:Null}" Foreground="Gray" />
+                <TextBox x:Name="TextBoxEmail" HorizontalAlignment="Left" Margin="13,20,0,0" TextWrapping="Wrap" Text="exam@yandex.ru" GotFocus="TextBox_GotFocus2" LostFocus="TextBox_LostFocus2" VerticalAlignment="Center" Width="319" FontSize="16" BorderBrush="{x:Null}" Foreground="Gray" />
             </Grid>
 
             <Grid Margin="0,234,0,235">
                 <Label Content="Пароль" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
                 <Label Content="_______________________________________________________________________________________________________________________________" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Foreground="Gray"/>
-                <TextBox HorizontalAlignment="Left" Margin="13,20,0,0" TextWrapping="Wrap" Text="Введите пароль" GotFocus="TextBox_GotFocus3" LostFocus="TextBox_LostFocus3" VerticalAlignment="Center" Width="319" FontSize="16" BorderBrush="{x:Null}" Foreground="Gray" />
+                <TextBox x:Name="TextBoxPassword" HorizontalAlignment="Left" Margin="13,20,0,0" TextWrapping="Wrap" Text="Введите пароль" GotFocus="TextBox_GotFocus3" LostFocus="TextBox_LostFocus3" VerticalAlignment="Center" Width="319" FontSize="16" BorderBrush="{x:Null}" Foreground="Gray" />
             </Grid>
 
             <Grid Margin="0,314,0,155">
                 <Label Content="Повторите пароль" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
                 <Label Content="_______________________________________________________________________________________________________________________________" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Foreground="Gray"/>
-                <TextBox HorizontalAlignment="Left" Margin="13,20,0,0" TextWrapping="Wrap" Text="Повторите пароль" GotFocus="TextBox_GotFocus4" LostFocus="TextBox_LostFocus4" VerticalAlignment="Center" Width="319" FontSize="16" BorderBrush="{x:Null}" Foreground="Gray" />
+                <TextBox x:Name="TextBoxConfirmPassword" HorizontalAlignment="Left" Margin="13,20,0,0" TextWrapping="Wrap" Text="Повторите пароль" GotFocus="TextBox_GotFocus4" LostFocus="TextBox_LostFocus4" VerticalAlignment="Center" Width="319" FontSize="16" BorderBrush="{x:Null}" Foreground="Gray" />
             </Grid>
 
 

@@ -9,11 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ForMenu.png" />
     <None Remove="logo.png" />
     <None Remove="Снимок экрана 2025-10-18 201133.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="ForMenu.png" />
     <Resource Include="logo.png" />
   </ItemGroup>
 

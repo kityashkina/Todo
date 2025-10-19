@@ -24,10 +24,10 @@ namespace Desktop
 		//кнопка "зарегистрироваться"
 		private void RegisterButton_Click(object sender, RoutedEventArgs e)
 		{
-			this.Hide();
-
 			Registration registrationWindow = new Registration();
 			registrationWindow.Show();
+
+			this.Close();
 		}
 
 		//при нажатии на текстбокс текст пропадает
@@ -74,7 +74,10 @@ namespace Desktop
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
+			Main_empty emptyWindow = new Main_empty();
+			emptyWindow.Show();
 
+			this.Close();
 		}
 	}
 }
