@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Todo.Entities;
 
 namespace Desktop
 {
@@ -19,6 +21,7 @@ namespace Desktop
 	/// </summary>
 	public partial class Registration : Window
 	{
+		private UserRepository userRepository = new UserRepository();
 		public Registration()
 		{
 			InitializeComponent();
@@ -65,9 +68,22 @@ namespace Desktop
 
 			if (result == "Успех")
 			{
-				Main_empty main_Empty = new Main_empty();
-				main_Empty.Show();
-				this.Close();
+				var newUser = new UserModel();
+				newUser.Username = TextBoxUsername.Text;
+				newUser.Email = TextBoxEmail.Text;
+				newUser.Password = TextBoxPassword.Text;
+
+				if (userRepository.Register(newUser))
+				{
+					MessageBox.Show("Регистрация успешна!");
+					Main_empty main_Empty = new Main_empty();
+					main_Empty.Show();
+					this.Close();
+				}
+				else
+				{
+					MessageBox.Show("Ошибка: пользователь с таким именем уже существует!");
+				}
 			}
 			else
 			{

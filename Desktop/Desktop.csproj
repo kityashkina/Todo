@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Todo.Entities\Todo.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="ForMenu.png" />
     <Resource Include="logo.png" />
   </ItemGroup>
