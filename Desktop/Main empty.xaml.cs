@@ -28,12 +28,12 @@ namespace Desktop
 		{
 
 		}
-		/* private void BackToRegistration_Click(object sender, RoutedEventArgs e)
+		 private void BackToRegistration_Click(object sender, RoutedEventArgs e)
 		{
 			Registration registration = new Registration();
 			registration.Show();
 			this.Close();
 		}
-		*/
+		
 	}
 }
