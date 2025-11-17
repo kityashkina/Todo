@@ -10,6 +10,7 @@ namespace Desktop.Repository
     public class UserRepository
     {
 		private static List<UserModel> users = new List<UserModel>();
+		public static UserModel CurrentUser { get; set; }
 
 		public bool Register(UserModel newUser)
 		{

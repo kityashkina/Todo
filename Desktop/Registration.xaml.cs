@@ -76,6 +76,7 @@ namespace Desktop
 				if (userRepository.Register(newUser))
 				{
 					MessageBox.Show("Регистрация успешна!");
+					UserRepository.CurrentUser = newUser;
 					Main_empty main_Empty = new Main_empty();
 					main_Empty.Show();
 					this.Close();

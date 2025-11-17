@@ -26,7 +26,9 @@ namespace Desktop
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-
+			Main mainWindow = new Main();
+			mainWindow.Show();
+			this.Close();
 		}
 		 private void BackToRegistration_Click(object sender, RoutedEventArgs e)
 		{
