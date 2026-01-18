@@ -24,18 +24,33 @@ namespace Desktop
             InitializeComponent();
         }
 
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			Main mainWindow = new Main();
-			mainWindow.Show();
-			this.Close();
-		}
+
 		 private void BackToRegistration_Click(object sender, RoutedEventArgs e)
 		{
 			Registration registration = new Registration();
 			registration.Show();
 			this.Close();
 		}
-		
+
+		private void CreateFirstTaskButton_Click(object sender, RoutedEventArgs e)
+		{
+			AddTaskWindow addTaskWindow = new AddTaskWindow();
+			if (addTaskWindow.ShowDialog() == true)
+			{
+				Main mainWindow = new Main();
+				mainWindow.CreateTaskInUI(addTaskWindow.TaskTitle, addTaskWindow.TaskTime,
+					addTaskWindow.TaskDate, addTaskWindow.TaskDescription);
+				mainWindow.Show();
+				this.Close();
+			}
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			Main mainWindow = new Main();
+			mainWindow.Show();
+			this.Close();
+		}
+
 	}
 }

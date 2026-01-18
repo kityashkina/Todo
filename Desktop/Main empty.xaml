@@ -29,7 +29,7 @@
         </StackPanel>
 
             <StackPanel Margin="145,340,228,159">
-            <Button Content="Создать первую задачу" HorizontalAlignment="Right" FontSize="20" Width="250" Height="45" BorderBrush="{x:Null}" Background="#FFFF5050" Foreground="White" Click="Button_Click">
+            <Button Content="Создать первую задачу" Click="CreateFirstTaskButton_Click" HorizontalAlignment="Right" FontSize="20" Width="250" Height="45" BorderBrush="{x:Null}" Background="#FFFF5050" Foreground="White">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="10"/>
