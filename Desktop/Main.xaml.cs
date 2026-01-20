@@ -11,7 +11,7 @@ namespace Desktop
     public partial class Main : Window
     {
         private Border selectedTask = null;
-        private string currentCategory = null; // null = показывать все задачи
+        private string currentFilter = "ALL";
 
         private List<Border> allTasks = new List<Border>();
         private Dictionary<Border, TaskData> taskData = new Dictionary<Border, TaskData>();
@@ -53,6 +53,10 @@ namespace Desktop
                 DetailDate.Text = data.Date;
                 DetailDescription.Text = string.IsNullOrEmpty(data.Description) ?
                     "Нет описания" : data.Description;
+
+                CompleteButton.Visibility = (data.IsCompleted || currentFilter == "HISTORY")
+                    ? Visibility.Collapsed
+                    : Visibility.Visible;
             }
 
             TaskDetailsPanel.Visibility = Visibility.Visible;
@@ -63,41 +67,81 @@ namespace Desktop
             var checkBox = (CheckBox)sender;
             var taskBorder = (Border)((StackPanel)checkBox.Parent).Parent;
 
-            if (checkBox.IsChecked == true)
+            if (!taskData.ContainsKey(taskBorder)) return;
+
+            var data = taskData[taskBorder];
+            data.IsCompleted = checkBox.IsChecked == true;
+
+            var textPanel = (StackPanel)((StackPanel)taskBorder.Child).Children[1];
+            var titleText = (TextBlock)textPanel.Children[0];
+
+            if (data.IsCompleted)
             {
-                if (taskData.ContainsKey(taskBorder))
+                titleText.Foreground = Brushes.Gray;
+                titleText.TextDecorations = TextDecorations.Strikethrough;
+
+                if (selectedTask == taskBorder)
                 {
-                    taskData[taskBorder].IsCompleted = true;
+                    CompleteButton.Visibility = Visibility.Collapsed;
                 }
-
-                var textPanel = (StackPanel)((StackPanel)taskBorder.Child).Children[1];
-                ((TextBlock)textPanel.Children[0]).Foreground = Brushes.Gray;
-                ((TextBlock)textPanel.Children[0]).TextDecorations = TextDecorations.Strikethrough;
-
-                taskBorder.Visibility = Visibility.Collapsed;
             }
             else
             {
-                if (taskData.ContainsKey(taskBorder))
-                {
-                    taskData[taskBorder].IsCompleted = false;
-                }
+                titleText.Foreground = Brushes.Black;
+                titleText.TextDecorations = null;
 
-                var textPanel = (StackPanel)((StackPanel)taskBorder.Child).Children[1];
-                ((TextBlock)textPanel.Children[0]).Foreground = Brushes.Black;
-                ((TextBlock)textPanel.Children[0]).TextDecorations = null;
-
-                // ВОТ ТУТ ИСПРАВЛЕНИЕ:
-                if (currentCategory == null || taskData[taskBorder].Category == currentCategory)
+                if (selectedTask == taskBorder && currentFilter != "HISTORY")
                 {
-                    taskBorder.Visibility = Visibility.Visible;
+                    CompleteButton.Visibility = Visibility.Visible;
                 }
             }
+
+            UpdateTaskVisibility(taskBorder);
 
             e.Handled = true;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void UpdateTaskVisibility(Border taskBorder)
+        {
+            if (!taskData.ContainsKey(taskBorder)) return;
+
+            var data = taskData[taskBorder];
+
+            switch (currentFilter)
+            {
+                case "ALL":
+                    taskBorder.Visibility = !data.IsCompleted ? Visibility.Visible : Visibility.Collapsed;
+                    break;
+
+                case "HISTORY":
+                    taskBorder.Visibility = data.IsCompleted ? Visibility.Visible : Visibility.Collapsed;
+                    break;
+
+                default:
+                    taskBorder.Visibility = (data.Category == currentFilter && !data.IsCompleted)
+                        ? Visibility.Visible
+                        : Visibility.Collapsed;
+                    break;
+            }
+        }
+
+        private void ApplyFilter()
+        {
+            foreach (Border taskBorder in allTasks)
+            {
+                UpdateTaskVisibility(taskBorder);
+            }
+
+            if (selectedTask != null && taskData.ContainsKey(selectedTask))
+            {
+                var data = taskData[selectedTask];
+                CompleteButton.Visibility = (data.IsCompleted || currentFilter == "HISTORY")
+                    ? Visibility.Collapsed
+                    : Visibility.Visible;
+            }
+        }
+
+        private void CompleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (selectedTask != null)
             {
@@ -109,7 +153,7 @@ namespace Desktop
             }
         }
 
-        private void Button_Click1(object sender, RoutedEventArgs e)
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (selectedTask != null)
             {
@@ -126,70 +170,38 @@ namespace Desktop
             AddTaskWindow addTaskWindow = new AddTaskWindow();
             if (addTaskWindow.ShowDialog() == true)
             {
-                CreateTaskInUI(addTaskWindow.TaskTitle, addTaskWindow.TaskTime,
-                    addTaskWindow.TaskDate, addTaskWindow.TaskDescription,
+                CreateTaskInUI(
+                    addTaskWindow.TaskTitle,
+                    addTaskWindow.TaskTime,
+                    addTaskWindow.TaskDate,
+                    addTaskWindow.TaskDescription,
                     addTaskWindow.TaskCategory);
             }
         }
 
         private void HistoryButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Border taskBorder in allTasks)
-            {
-                var checkBox = (CheckBox)((StackPanel)taskBorder.Child).Children[0];
-                taskBorder.Visibility = checkBox.IsChecked == true ? Visibility.Visible : Visibility.Collapsed;
-            }
+            currentFilter = "HISTORY";
+            ApplyFilter();
+            TaskDetailsPanel.Visibility = Visibility.Collapsed;
+            selectedTask = null;
         }
 
         private void TasksButton_Click(object sender, RoutedEventArgs e)
         {
-            currentCategory = null;
-            ShowAllTasks();
+            currentFilter = "ALL";
+            ApplyFilter();
+            TaskDetailsPanel.Visibility = Visibility.Collapsed;
+            selectedTask = null;
         }
 
         private void CategoryButton_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
-            currentCategory = button.Content.ToString();
-            FilterTasksByCategory();
-        }
-
-        private void ShowAllTasks()
-        {
-            foreach (Border taskBorder in allTasks)
-            {
-                if (taskData.ContainsKey(taskBorder))
-                {
-                    var data = taskData[taskBorder];
-                    taskBorder.Visibility = !data.IsCompleted ? Visibility.Visible : Visibility.Collapsed;
-                }
-            }
-        }
-
-        private void FilterTasksByCategory()
-        {
-            if (string.IsNullOrEmpty(currentCategory))
-            {
-                ShowAllTasks();
-                return;
-            }
-
-            foreach (Border taskBorder in allTasks)
-            {
-                if (taskData.ContainsKey(taskBorder))
-                {
-                    var data = taskData[taskBorder];
-
-                    if (data.Category == currentCategory && !data.IsCompleted)
-                    {
-                        taskBorder.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        taskBorder.Visibility = Visibility.Collapsed;
-                    }
-                }
-            }
+            currentFilter = button.Content.ToString();
+            ApplyFilter();
+            TaskDetailsPanel.Visibility = Visibility.Collapsed;
+            selectedTask = null;
         }
 
         public void CreateTaskInUI(string title, string time, string date, string description = "", string category = "Дом")
@@ -200,8 +212,7 @@ namespace Desktop
                 BorderThickness = TaskTemplate.BorderThickness,
                 CornerRadius = TaskTemplate.CornerRadius,
                 Background = TaskTemplate.Background,
-                Margin = TaskTemplate.Margin,
-                Tag = Tuple.Create(date, description, category)
+                Margin = TaskTemplate.Margin
             };
 
             StackPanel innerStack = new StackPanel
@@ -256,15 +267,16 @@ namespace Desktop
                 IsCompleted = false
             };
 
-            // ВОТ ТУТ ВАЖНОЕ ИСПРАВЛЕНИЕ:
-            if (currentCategory == null || currentCategory == category)
-            {
-                taskBorder.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                taskBorder.Visibility = Visibility.Collapsed;
-            }
+            UpdateTaskVisibility(taskBorder);
+        }
+
+        private void Button_Click1(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
