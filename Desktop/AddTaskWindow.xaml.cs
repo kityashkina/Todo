@@ -10,8 +10,9 @@ namespace Desktop
 		public string TaskTime { get; private set; }
 		public string TaskDate { get; private set; }
 		public string TaskDescription { get; private set; }
+        public string TaskCategory { get; private set; }
 
-		public AddTaskWindow()
+        public AddTaskWindow()
 		{
 			InitializeComponent();
 			DatePicker.SelectedDate = DateTime.Now;
@@ -31,8 +32,9 @@ namespace Desktop
 			TaskTime = (TimePicker.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "9:00am";
 			TaskDate = DatePicker.SelectedDate?.ToString("dd MMMM yyyy") ?? DateTime.Now.ToString("dd MMMM yyyy");
 			TaskDescription = DescriptionTextBox.Text;
+            TaskCategory = (CategoryComboBox.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "Дом";
 
-			this.DialogResult = true;
+            this.DialogResult = true;
 			this.Close();
 		}
 
