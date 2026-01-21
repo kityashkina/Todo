@@ -74,10 +74,7 @@ namespace Desktop
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			Main_empty emptyWindow = new Main_empty();
-			emptyWindow.Show();
-
-			this.Close();
-		}
+            MessageBox.Show("Вы не зарегистрированы!");
+        }
 	}
 }
